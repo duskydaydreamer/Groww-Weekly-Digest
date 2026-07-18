@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
 
     groq_api_key: str = ""
-    groq_model: str = "llama3-70b-8192"
+    groq_model: str = "llama-3.3-70b-versatile"
     groq_temperature: float = 0.0
     review_window_weeks: int = 12
     max_themes: int = 5

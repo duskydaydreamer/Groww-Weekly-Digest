@@ -29,7 +29,7 @@ jobs:
       - name: Run Pipeline Master Switch
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GROQ_MODEL: "llama3-70b-8192"
+          GROQ_MODEL: "llama-3.3-70b-versatile"
           GROQ_TEMPERATURE: 0
           REVIEW_WINDOW_WEEKS: 8
           MAX_THEMES: 5
