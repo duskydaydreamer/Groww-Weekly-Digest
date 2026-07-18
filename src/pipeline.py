@@ -55,7 +55,12 @@ def run_pipeline(settings: Settings, dry_run: bool = False, step: Optional[str] 
     try:
         # STEP 1: Ingest
         if should_run('ingest'):
-            logger.info("=== STEP 1: Ingesting Data ===")
+            logger.info("=== STEP 1: Scraping & Ingesting Data ===")
+            # 1a. Scrape fresh data
+            from src.scraper import main as run_scraper
+            run_scraper()
+            
+            # 1b. Load into pipeline
             reviews_loaded = ingest_reviews()
             if reviews_loaded == 0:
                 raise ValueError("No reviews ingested.")
