@@ -1,9 +1,9 @@
-# 📊 Weekly Review Pulse
+# Weekly Review Pulse
 *Generated for the week of **{{ week_label }}***
 
 ---
 
-## 📌 Top Themes
+## Top Themes
 
 {% for theme in top_themes %}
 ### {{ loop.index }}. {{ theme.name }}
@@ -14,7 +14,7 @@
 
 ---
 
-## 💬 User Voices
+## User Voices
 
 {% for quote in user_quotes %}
 > *"{{ quote.text }}"*
@@ -23,7 +23,7 @@
 
 ---
 
-## 🎯 Recommended Actions
+## Recommended Actions
 
 {% for action in action_ideas %}
 - [ ] **{{ action }}**
