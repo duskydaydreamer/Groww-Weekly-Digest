@@ -1,20 +1,33 @@
 # 📊 Weekly Review Pulse
-## {{ week_label }}
+*Generated for the week of **{{ week_label }}***
 
-### 📌 Top Themes
+---
+
+## 📌 Top Themes
+
 {% for theme in top_themes %}
-{{ loop.index }}. **{{ theme.name }}** — {{ theme.summary }} _(Avg Sentiment: {{ theme.avg_sentiment }} | Actionable Issues: {{ theme.actionable_count }})_
-{% endfor %}
+### {{ loop.index }}. {{ theme.name }}
+> **Overview:** {{ theme.summary }}
+> *Avg Sentiment: {{ theme.avg_sentiment }} | Actionable Issues: {{ theme.actionable_count }}*
 
-### 💬 User Voices
-{% for quote in user_quotes %}
-- "{{ quote.text }}"
-{% endfor %}
-
-### 🎯 Action Ideas
-{% for action in action_ideas %}
-{{ loop.index }}. {{ action }}
 {% endfor %}
 
 ---
-_Reviews analyzed: {{ total_reviews }} | Sources: {{ sources | join(", ") }} | Period: {{ period_start }} – {{ period_end }}_
+
+## 💬 User Voices
+
+{% for quote in user_quotes %}
+> *"{{ quote.text }}"*
+
+{% endfor %}
+
+---
+
+## 🎯 Recommended Actions
+
+{% for action in action_ideas %}
+- [ ] **{{ action }}**
+{% endfor %}
+
+---
+*Data Source: Analyzed {{ total_reviews }} reviews from {{ sources | join(", ") }} for the period of {{ period_start }} to {{ period_end }}.*
