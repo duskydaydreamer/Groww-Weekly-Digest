@@ -12,8 +12,18 @@ T = TypeVar('T', bound=BaseModel)
 class LLMClient:
     def __init__(self):
         self.settings = get_settings()
+        if not self.settings.groq_api_key:
+            logger.error("GROQ_API_KEY is empty or not set. Please check your environment variables or GitHub Secrets.")
+            raise ValueError("GROQ_API_KEY is required but not set.")
+            
+        import httpx
         from groq import Groq
-        self.client = Groq(api_key=self.settings.groq_api_key)
+        
+        # Use a custom HTTP client forcing IPv4, which resolves some Github Actions connection issues with Groq API
+        http_client = httpx.Client(
+            transport=httpx.HTTPTransport(local_address="0.0.0.0")
+        )
+        self.client = Groq(api_key=self.settings.groq_api_key, http_client=http_client)
 
     def generate_json(self, prompt: str, schema: Type[T]) -> Optional[T]:
         """Calls the LLM and parses the response into the provided Pydantic schema, with retries."""
