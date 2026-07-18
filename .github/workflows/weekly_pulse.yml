@@ -44,3 +44,10 @@ jobs:
           MCP_AUTH_TOKEN: ${{ secrets.MCP_AUTH_TOKEN }}
         run: |
           python run_pulse.py
+          
+      - name: Upload Weekly Pulse Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-pulse-report
+          path: data/exports/weekly_pulse.md
