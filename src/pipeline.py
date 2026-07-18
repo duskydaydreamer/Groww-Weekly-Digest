@@ -164,7 +164,12 @@ def run_pipeline(settings: Settings, dry_run: bool = False, step: Optional[str] 
                 with open('data/exports/weekly_pulse.md', 'r', encoding='utf-8') as f:
                     md_content = f.read()
                     
-                email_body = f"Hello,\n\nHere is the Weekly Review Pulse for {pulse.period_start} to {pulse.period_end}."
+                email_body = (
+                    f"Hello Team,\n\n"
+                    f"The Weekly Review Pulse for {pulse.period_start} to {pulse.period_end} is ready for review.\n\n"
+                    f"This week, the AI analyzed {pulse.total_reviews} recent user reviews and identified {len(pulse.themes)} core themes affecting our users.\n\n"
+                    f"Please click the link below to read the full automated report."
+                )
                 delivery_result = deliver(pulse, md_content, email_body, settings)
                 logger.info(f"Delivery result: {delivery_result}")
 

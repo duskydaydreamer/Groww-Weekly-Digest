@@ -92,7 +92,7 @@ async def publish_to_google_docs(client: httpx.AsyncClient, post_url: str, respo
 
 async def create_gmail_draft(client: httpx.AsyncClient, post_url: str, responses: dict, get_id, email_body: str, settings: Settings, doc_url: Optional[str]) -> DraftResult:
     try:
-        subject = "📊 Weekly Review Pulse"
+        subject = "Weekly Review Pulse"
         body = email_body
         if doc_url:
             body += f"\n\nGoogle Doc Link: {doc_url}"
