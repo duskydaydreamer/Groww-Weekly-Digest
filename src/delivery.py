@@ -41,7 +41,14 @@ async def _call_tool(client: httpx.AsyncClient, post_url: str, request_id: int, 
     data = await responses[request_id]
     if "error" in data:
         raise Exception(f"Tool error: {data['error']}")
-    return data.get("result", {})
+    
+    result = data.get("result", {})
+    if result.get("isError"):
+        content = result.get("content", [])
+        error_msg = content[0].get("text", "Unknown tool execution error") if content else "Unknown tool execution error"
+        raise Exception(f"Tool execution failed: {error_msg}")
+        
+    return result
 
 async def publish_to_google_docs(client: httpx.AsyncClient, post_url: str, responses: dict, get_id, pulse_md: str, settings: Settings) -> DocResult:
     try:
