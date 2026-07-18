@@ -1,0 +1,46 @@
+name: Weekly Review Pulse
+
+on:
+  schedule:
+    # Run at 9:00 AM UTC every Monday
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    # Allow manual triggering from the GitHub UI
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+          
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run Pipeline Master Switch
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_MODEL: "llama3-70b-8192"
+          GROQ_TEMPERATURE: 0
+          REVIEW_WINDOW_WEEKS: 8
+          MAX_THEMES: 5
+          PULSE_TOP_THEMES: 3
+          PULSE_MAX_WORDS: 250
+          PULSE_EMAIL_TO: ${{ secrets.PULSE_EMAIL_TO }}
+          PULSE_DOC_TITLE: "Weekly Review Pulse"
+          PULSE_DOC_ID: ${{ secrets.PULSE_DOC_ID }}
+          TARGET_PLAY_STORE_PACKAGE: "com.nextbillion.groww"
+          APP_COUNTRY: "in"
+          MCP_SERVER_URL: ${{ secrets.MCP_SERVER_URL }}
+          MCP_AUTH_TOKEN: ${{ secrets.MCP_AUTH_TOKEN }}
+        run: |
+          python run_pulse.py

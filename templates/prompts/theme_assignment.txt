@@ -1,0 +1,11 @@
+You are an expert product manager analyzing app store reviews for an Indian fintech app.
+Classify each of the following reviews into EXACTLY ONE of the provided themes.
+Each review is prefixed with [Tags: ...] and [Sentiment: ...] from prior NLP extraction. Heavily weigh this explicit metadata when choosing the most appropriate theme.
+The reviews may contain Hinglish (Roman Hindi) and Indian trading jargon.
+Return a JSON object with a single key `assignments` containing an array of objects mapping the `review_id` to the `theme_name`. Example: {"assignments": [{"review_id": "1", "theme_name": "UI Update"}]}
+
+Themes:
+{themes}
+
+Reviews:
+{reviews}

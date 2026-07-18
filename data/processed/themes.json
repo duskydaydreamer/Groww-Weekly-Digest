@@ -1,0 +1,54 @@
+[
+    {
+        "name": "App Performance Issues",
+        "summary": "Discovered theme focused on App Performance Issues",
+        "review_count": 56,
+        "avg_rating": 2.5,
+        "avg_sentiment": 0.03,
+        "actionable_count": 28,
+        "representative_quotes": [
+            "The app is not working at morning time , we are unable to place an order",
+            "this is the worst application for traders. I had some shares to sell. It didn't let me that happen when the price was in my target level. so i immediately called the customer care and there was also no response then after sometime I checked my entire holding was not showing due to server issue, when the price crashed after that it was showing and allowing me to sell out my stocks.",
+            "The app is full of glitches lately.Unable to withdraw and add money during market crashes.Ipo status are not updating properly and mandates are not coming to upi once application is placed. Sometimes the watchlist also doesn't appear properly."
+        ]
+    },
+    {
+        "name": "Poor Customer Support",
+        "summary": "Discovered theme focused on Poor Customer Support",
+        "review_count": 39,
+        "avg_rating": 1.41,
+        "avg_sentiment": -0.36,
+        "actionable_count": 24,
+        "representative_quotes": [
+            "I have been investing in mutual funds through Groww, but my experience has been disappointing. When I tried to withdraw my money, I never received the OTP required for verification. Despite multiple follow-ups, the issue was not resolved, and customer support was not helpful.",
+            "Worst support team I've ever seen. Replying too late and flood of response once reply then suddenly close the ticket. No one is listening to customers properly. Asking for something and they are replying to other things.",
+            "You can stay on the line with their customer care number for as long as you like; no representative will speak to you. It doesn't matter how long you keep the call connected\u2014even after raising a ticket, there is no callback from their end. Zero customer support."
+        ]
+    },
+    {
+        "name": "High Brokerage Charges",
+        "summary": "Discovered theme focused on High Brokerage Charges",
+        "review_count": 21,
+        "avg_rating": 2.33,
+        "avg_sentiment": 0.04,
+        "actionable_count": 17,
+        "representative_quotes": [
+            "this app is best..... but it order brokerage is RS 20 per order buy or sell that means RS 40+ charges... in F&O options.. and stocks per order RS 5 brokerage + all charge (STT, GST,and more other) buy or sell... and stop loss is before hits without reaching on the price...",
+            "Brokerage is little high otherwise overall experience is good. Easy transaction.user friendly platform.",
+            "for f and o they say only \u20b920 for buy and sell. total \u20b940 for trade. but iam charged \u20b969 and \u20b979 per trade. Groww is a scam app. no customer care support and these girls chat with us. no technical handling. i cannot withdraw amount from profit. they are greedy about user's money"
+        ]
+    },
+    {
+        "name": "Trading and Order Placement Issues",
+        "summary": "Discovered theme focused on Trading and Order Placement Issues",
+        "review_count": 18,
+        "avg_rating": 2.33,
+        "avg_sentiment": -0.04,
+        "actionable_count": 8,
+        "representative_quotes": [
+            "this is the worst app to do trading. order placed before 9:15 never gets executed even if price when below bid price. App places intraday order instead of delivery as it resets intraday randomly and when u dont pay attention you are bound to make mistakes. there is no easy access to customer care. worst app",
+            "Feature Request: Spot-based trigger for option trading. I trade NIFTY options based on spot levels. During fast market moves, option prices change quickly and I miss entries. Please add a feature where orders are triggered using NIFTY spot price and automatically execute in selected option contracts (CE/PE). Also allow stop loss and target based on spot price instead of option price. This will improve execution and trading accuracy. Will give 5 star then thanks",
+            "I had one of the worst experience here. I cant sell my order . There is no OCO order. Its literally bad i felt. Then there is no way ypu can place a gtt order without paymemt of 100 for ddpi . I used kite for 3 years and yeah it was so good. Tried groww 3 years back and its even worse now. you guys expect someone to pay 100 for every order for selling. your sulport is pathetic."
+        ]
+    }
+]

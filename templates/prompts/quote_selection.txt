@@ -1,0 +1,8 @@
+You are an expert product manager analyzing app store reviews for an Indian fintech app.
+Given the following list of reviews that have been classified under the theme "{theme_name}",
+select up to 3 representative quotes that best capture the sentiment of this theme.
+Prioritize quotes that are well-articulated, preferably in English or clear Hinglish, and provide constructive feedback or a clear pain point.
+Return a JSON object with a single key `quotes` containing an array of strings with only the selected quotes.
+
+Reviews:
+{reviews}

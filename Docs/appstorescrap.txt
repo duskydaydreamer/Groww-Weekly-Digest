@@ -1,0 +1,97 @@
+# Complete Guide to Implementing App Store Reviews Scraping
+
+This guide details how we implemented Apple App Store review scraping for this project, based on the `src/ingest/appstore_scraper.py` module.
+
+## 1. Prerequisites and Libraries
+
+We use the `app-store-scraper` Python library to fetch public reviews from the App Store.
+
+Install it via pip if not already installed:
+```bash
+pip install app-store-scraper
+```
+
+## 2. Core Implementation
+
+The scraping logic is encapsulated in the `scrape_appstore_reviews` function located in `src/ingest/appstore_scraper.py`.
+
+### Required Inputs:
+- `app_id` (str): The numeric ID of the app on the App Store (e.g., '310633997' for WhatsApp).
+- `app_name` (str): The URL slug for the app (e.g., 'whatsapp-messenger').
+- `country` (str, default "us"): The two-letter country code for the storefront.
+- `count` (int, default 1000): The maximum number of reviews to fetch.
+
+### Step-by-Step Logic:
+
+1. **Initialization:**
+   Initialize the scraper with the app details using the `AppStore` class:
+   ```python
+   from app_store_scraper import AppStore
+   app = AppStore(country=country, app_name=app_name, app_id=app_id)
+   ```
+
+2. **Fetching Reviews:**
+   Call the `review()` method with the desired count limit. The raw review data will then be available in the `app.reviews` attribute.
+   ```python
+   app.review(how_many=count)
+   raw_reviews = app.reviews
+   ```
+
+3. **Data Mapping & Transformation:**
+   The raw reviews returned by `app-store-scraper` have specific fields. We map these to our project's unified review schema to ensure consistency across different sources (e.g., App Store, Play Store).
+
+   The mapping process iterates over each raw review:
+   - **Date Formatting:** Converts datetime objects to a string format `YYYY-MM-DD`.
+   - **Schema Construction:** Builds a dictionary with the following unified fields:
+     - `id`: Unique review ID (`id`).
+     - `source`: Hardcoded as `"app_store"`.
+     - `rating`: Star rating out of 5 (`rating`).
+     - `title`: Review title (`title`).
+     - `text`: Review body/content (`review`).
+     - `date`: The formatted review date string.
+     - `version`: Version of the app the review was left for (`isCurrentVersion`).
+
+   ```python
+   unified = []
+   for r in raw_reviews:
+       review_date = r.get("date")
+       if isinstance(review_date, datetime):
+           date_str = review_date.strftime("%Y-%m-%d")
+       else:
+           date_str = str(review_date) if review_date else ""
+
+       unified.append({
+           "id": str(r.get("id", "")),
+           "source": "app_store",
+           "rating": r.get("rating", 0),
+           "title": r.get("title", ""),
+           "text": r.get("review", ""),
+           "date": date_str,
+           "version": r.get("isCurrentVersion", ""),
+       })
+   ```
+
+4. **Error Handling & Logging:**
+   The fetching step is wrapped in a `try...except` block to gracefully handle networking or scraper failures and return an empty list (`[]`), ensuring the larger pipeline does not crash.
+   The process also utilizes the standard `logging` library to track when a scrape begins, succeeds, or fails.
+
+## 3. Usage Example
+
+To scrape reviews for an app (e.g. WhatsApp):
+
+```python
+from src.ingest.appstore_scraper import scrape_appstore_reviews
+
+reviews = scrape_appstore_reviews(
+    app_id="310633997",
+    app_name="whatsapp-messenger",
+    country="us",
+    count=500
+)
+
+for review in reviews:
+    print(f"[{review['rating']} Stars] {review['title']}: {review['text']}")
+```
+
+## Summary
+This implementation successfully abstracts the `app-store-scraper` library into a robust, error-handled utility that returns cleanly formatted dictionaries ready for downstream ingestion, normalization, or analysis in the project pipeline.

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "google-docs-and-gmail": {
+      "command": "sse",
+      "url": "https://mcp-server-1-igzm.onrender.com/sse"
+    }
+  }
+}
