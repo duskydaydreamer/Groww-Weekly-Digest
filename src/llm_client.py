@@ -12,9 +12,16 @@ T = TypeVar('T', bound=BaseModel)
 class LLMClient:
     def __init__(self):
         self.settings = get_settings()
-        if not self.settings.groq_api_key:
+        
+        # Clean the API key in case of accidental hidden spaces/newlines from copy-pasting
+        raw_key = self.settings.groq_api_key or ""
+        clean_key = raw_key.strip()
+        
+        if not clean_key:
             logger.error("GROQ_API_KEY is empty or not set. Please check your environment variables or GitHub Secrets.")
             raise ValueError("GROQ_API_KEY is required but not set.")
+            
+        logger.info(f"Loaded GROQ_API_KEY starting with '{clean_key[:4]}' (Length: {len(clean_key)})")
             
         import httpx
         from groq import Groq
@@ -23,7 +30,7 @@ class LLMClient:
         http_client = httpx.Client(
             transport=httpx.HTTPTransport(local_address="0.0.0.0")
         )
-        self.client = Groq(api_key=self.settings.groq_api_key, http_client=http_client)
+        self.client = Groq(api_key=clean_key, http_client=http_client)
 
     def generate_json(self, prompt: str, schema: Type[T]) -> Optional[T]:
         """Calls the LLM and parses the response into the provided Pydantic schema, with retries."""

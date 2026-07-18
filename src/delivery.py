@@ -156,7 +156,11 @@ async def deliver_async(pulse_md: str, email_body: str, settings: Settings) -> D
                 
                 task = asyncio.create_task(listen())
                 
-                post_path = await endpoint_future
+                try:
+                    post_path = await asyncio.wait_for(endpoint_future, timeout=30.0)
+                except asyncio.TimeoutError:
+                    raise Exception("Timed out waiting for MCP endpoint event after 30 seconds.")
+                    
                 post_url = post_path if post_path.startswith("http") else urljoin(url, post_path)
                 logger.info("Connected to MCP server.")
                 
