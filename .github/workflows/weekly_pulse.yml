@@ -15,6 +15,9 @@ on:
         required: false
         default: '12'
 
+permissions:
+  contents: write
+
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
