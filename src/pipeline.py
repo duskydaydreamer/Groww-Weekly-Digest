@@ -167,7 +167,7 @@ def run_pipeline(settings: Settings, dry_run: bool = False, step: Optional[str] 
                 email_body = (
                     f"Hello Team,\n\n"
                     f"The Weekly Review Pulse for {pulse.period_start} to {pulse.period_end} is ready for review.\n\n"
-                    f"This week, the AI analyzed {pulse.total_reviews} recent user reviews and identified {len(pulse.themes)} core themes affecting our users.\n\n"
+                    f"This week, the AI analyzed {pulse.total_reviews} recent user reviews and identified {len(pulse.top_themes)} core themes affecting our users.\n\n"
                     f"Please click the link below to read the full automated report."
                 )
                 delivery_result = deliver(pulse, md_content, email_body, settings)

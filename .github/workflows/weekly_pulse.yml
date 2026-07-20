@@ -5,7 +5,15 @@ on:
     # Run at 9:00 AM UTC every Monday
     - cron: '0 9 * * 1'
   workflow_dispatch:
-    # Allow manual triggering from the GitHub UI
+    inputs:
+      app_id:
+        description: 'App ID (e.g. com.nextbillion.groww)'
+        required: false
+        default: 'com.nextbillion.groww'
+      weeks:
+        description: 'Number of weeks back to scrape'
+        required: false
+        default: '8'
 
 jobs:
   run-pipeline:
@@ -31,7 +39,7 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GROQ_MODEL: "llama-3.3-70b-versatile"
           GROQ_TEMPERATURE: 0
-          REVIEW_WINDOW_WEEKS: 8
+          REVIEW_WINDOW_WEEKS: ${{ github.event.inputs.weeks || 8 }}
           MAX_THEMES: 5
           PULSE_TOP_THEMES: 3
           PULSE_MAX_WORDS: 250
@@ -44,6 +52,19 @@ jobs:
           MCP_AUTH_TOKEN: ${{ secrets.MCP_AUTH_TOKEN }}
         run: |
           python run_pulse.py
+          
+      - name: Save to History Folder
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          mkdir -p data/history/$DATE
+          cp data/exports/pulse.json data/history/$DATE/pulse.json
+          cp data/exports/weekly_pulse.md data/history/$DATE/weekly_pulse.md
+          
+      - name: Commit and Push History
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: Save automated Pulse Report history for $DATE"
+          file_pattern: data/history/*
           
       - name: Upload Weekly Pulse Report
         if: always()
